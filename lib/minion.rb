@@ -49,7 +49,7 @@ module Minion
 		end
 		handler.sub = lambda do
 			log "subscribing to #{queue}"
-			MQ.queue(queue).subscribe(:ack => true) do |h,m|
+			MQ.queue(queue, :durable => true, :auto_delete => false).subscribe(:ack => true) do |h,m|
 				return if AMQP.closing?
 				begin
 					log "recv: #{queue}:#{m}"
